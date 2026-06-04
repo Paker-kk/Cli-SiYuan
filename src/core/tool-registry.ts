@@ -7,8 +7,9 @@ import {
     callAvTool,
     callBlockTool,
     callDocumentTool,
-    callFileTool,
     callFeedbackTool,
+    callFetchTool,
+    callFileTool,
     callFlashcardTool,
     callFsTool,
     callMascotTool,
@@ -19,8 +20,9 @@ import {
     listAvTools,
     listBlockTools,
     listDocumentTools,
-    listFileTools,
     listFeedbackTools,
+    listFetchTools,
+    listFileTools,
     listFlashcardTools,
     listFsTools,
     listMascotTools,
@@ -74,6 +76,7 @@ export const TOOL_REGISTRY: Record<ToolCategory, ToolModule> = {
     system: { category: 'system', listTools: listSystemTools as ToolModule['listTools'], callTool: callSystemTool as ToolModule['callTool'] },
     flashcard: { category: 'flashcard', listTools: listFlashcardTools as ToolModule['listTools'], callTool: callFlashcardTool as ToolModule['callTool'] },
     mascot: { category: 'mascot', listTools: listMascotTools as ToolModule['listTools'], callTool: callMascotTool as ToolModule['callTool'] },
+    fetch: { category: 'fetch', listTools: listFetchTools as ToolModule['listTools'], callTool: callFetchTool as ToolModule['callTool'] },
 };
 
 export const USER_RULES_TOOL_DESCRIPTION_REMINDER = `Active user custom rules apply. Read fs(action="read", path="${USER_RULES_VIRTUAL_PATH}") or siyuan://help/user-rules before choosing actions.`;

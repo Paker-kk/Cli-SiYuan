@@ -44,6 +44,7 @@ export const CATEGORY_TAB_DEFS: CategoryTabDefinition[] = [
     { category: "flashcard", groupKey: "Flashcards", iconKey: "layers" },
     { category: "mascot", groupKey: "Mascot Tool", iconKey: "paw" },
     { category: "feedback", groupKey: "Feedback Tool", iconKey: "message" },
+    { category: "fetch", groupKey: "Web Fetch", iconKey: "globe" },
 ];
 
 export const HTTP_GROUP_KEY = "Connection Config";

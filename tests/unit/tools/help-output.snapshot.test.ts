@@ -57,6 +57,10 @@ function createAllEnabledConfig(): ToolConfig {
             enabled: true,
             actions: Object.fromEntries(ACTIONS_BY_CATEGORY.feedback.map((action) => [action, true])) as ToolConfig['feedback']['actions'],
         },
+        fetch: {
+            enabled: true,
+            actions: Object.fromEntries(ACTIONS_BY_CATEGORY.fetch.map((action) => [action, true])) as ToolConfig['fetch']['actions'],
+        },
         userRulesText: '',
         agentSiyuanMemoryText: '',
         agentSiyuanMemoryUpdatedAt: '',

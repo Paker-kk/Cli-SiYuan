@@ -11,6 +11,7 @@ import {
     type TagAction,
     type MascotAction,
     type FeedbackAction,
+    type FetchAction,
     type FsAction,
     type ToolCategory,
 } from './config';
@@ -120,6 +121,13 @@ export const FEEDBACK_GUIDANCE: string[] = [
     'Put the full issue-style body in description with these headings when useful: ## Summary, ## What happened, ## Expected behavior, ## Steps or context, ## Impact, ## Suggested fix.',
     'Use impact for a one- or two-sentence impact summary, and suggestion for the most direct improvement idea without repeating the full description.',
     'Do not include secrets, private note content, API tokens, or sensitive document paths in feedback.',
+];
+
+export const FETCH_GUIDANCE: string[] = [
+    'Fetches any web page and returns content as Markdown (default) or raw HTML.',
+    'HTML pages are automatically converted to plain-text Markdown for readability.',
+    'Use maxLength and startIndex for paginated retrieval of very large pages.',
+    'Set raw=true to get the original HTML content without conversion.',
 ];
 
 export const FS_ACTION_HINTS: Partial<Record<FsAction, string>> = {
@@ -254,6 +262,10 @@ export const FEEDBACK_ACTION_HINTS: Partial<Record<FeedbackAction, string>> = {
     submit: 'Sends plain-text feedback. Put a GitHub Issue-style report in description when reporting bugs, confusing behavior, or rough workflows. Recommended headings: ## Summary, ## What happened, ## Expected behavior, ## Steps or context, ## Impact, ## Suggested fix. impact should be a short impact summary; suggestion should be the direct fix idea. Avoid private note content and secrets.',
 };
 
+export const FETCH_ACTION_HINTS: Partial<Record<FetchAction, string>> = {
+    fetch: 'Provide a URL to fetch. Returns content in Markdown by default; set raw=true for raw HTML. Use maxLength and startIndex for pagination on large pages.',
+};
+
 export const TOOL_GUIDANCE_BY_CATEGORY: Record<ToolCategory, string[]> = {
     fs: FS_GUIDANCE,
     notebook: NOTEBOOK_GUIDANCE,
@@ -267,6 +279,7 @@ export const TOOL_GUIDANCE_BY_CATEGORY: Record<ToolCategory, string[]> = {
     flashcard: FLASHCARD_GUIDANCE,
     mascot: MASCOT_GUIDANCE,
     feedback: FEEDBACK_GUIDANCE,
+    fetch: FETCH_GUIDANCE,
 };
 
 export const TOOL_ACTION_HINTS: Record<ToolCategory, Partial<Record<string, string>>> = {
@@ -282,6 +295,7 @@ export const TOOL_ACTION_HINTS: Record<ToolCategory, Partial<Record<string, stri
     flashcard: FLASHCARD_ACTION_HINTS,
     mascot: MASCOT_ACTION_HINTS,
     feedback: FEEDBACK_ACTION_HINTS,
+    fetch: FETCH_ACTION_HINTS,
 };
 
 export interface HelpExample {
@@ -337,6 +351,7 @@ export const TOOL_ACTION_EXAMPLES: Record<ToolCategory, Partial<Record<string, H
     flashcard: {},
     mascot: {},
     feedback: {},
+    fetch: {},
 };
 
 export { ACTIONS_BY_CATEGORY } from './config';

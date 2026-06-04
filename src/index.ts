@@ -26,6 +26,7 @@ import { submitFeedback, type FeedbackInput, type FeedbackSubmitResult } from "@
 import McpConfig from "@/ui/setting/mcp-config.svelte";
 import ToolPuppy from "@/ui/components/ToolPuppy.svelte";
 import VersionControlPanel from "@/ui/version-control/VersionControlPanel.svelte";
+import TerminalPanel from "@/ui/terminal/TerminalPanel.svelte";
 
 import { HttpServerLauncher } from "@/server-launcher";
 
@@ -36,6 +37,12 @@ const VERSION_CONTROL_DOCK_ROOT_ID = "SisyphusTimelineDockPanel";
 const VERSION_CONTROL_ICON_ID = "iconSisyphusTimelineDock";
 const VERSION_CONTROL_ICON_SYMBOL = `<symbol id="${VERSION_CONTROL_ICON_ID}" viewBox="0 0 24 24"><path fill="currentColor" d="M7 3a3 3 0 0 1 2 5.24v1.27l6 3V8.24A3 3 0 1 1 17 9v5a1 1 0 0 1-1.45.89L9 11.62v4.14A3 3 0 1 1 7 15.76V8.24A3 3 0 0 1 7 3Zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM7 17a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></symbol>`;
 
+const TERMINAL_DOCK_TYPE = "sisyphusTerminalDock";
+const TERMINAL_DOCK_POSITION = "RightBottom";
+const TERMINAL_DOCK_ROOT_ID = "SisyphusTerminalDockPanel";
+const TERMINAL_ICON_ID = "iconSisyphusTerminalDock";
+const TERMINAL_ICON_SYMBOL = `<symbol id="${TERMINAL_ICON_ID}" viewBox="0 0 24 24"><path fill="currentColor" d="M20 19V7H4v12h16m1-16h-6l-2-2H3a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h18a2 2 0 0 0 2-2V5c0-1.1-.9-2-2-2zM8 13l3 3-3 3M13 17h4"/></symbol>`;
+
 type CurrentDocumentContext = {
     id: string;
     title: string;
@@ -45,6 +52,8 @@ export default class SiyuanMCP extends Plugin {
     private puppyComponent: ToolPuppy | null = null;
     private versionControlPanel: VersionControlPanel | null = null;
     private versionControlContainer: HTMLElement | null = null;
+    private terminalPanel: TerminalPanel | null = null;
+    private terminalContainer: HTMLElement | null = null;
     private currentDocument: CurrentDocumentContext = { id: "", title: "" };
     private puppyVisible = true;
     private puppyContainer: HTMLElement | null = null;
@@ -56,13 +65,27 @@ export default class SiyuanMCP extends Plugin {
 
     async onload() {
         this.addIcons(VERSION_CONTROL_ICON_SYMBOL);
+        this.addIcons(TERMINAL_ICON_SYMBOL);
         this.registerVersionControlDock();
+        this.registerTerminalDock();
         (this as any).addCommand?.({
             langKey: "openSnapshotVersionControl",
             langText: this.i18n?.timeline_open_command || "打开文档时间线",
             hotkey: "",
             callback: () => this.openVersionControl(),
             editorCallback: (protyle: any) => this.openVersionControl(protyle),
+        });
+        (this as any).addCommand?.({
+            langKey: "openTerminal",
+            langText: this.i18n?.terminal_open_command || "打开命令行终端",
+            hotkey: "",
+            callback: () => this.toggleTerminal(),
+        });
+        (this as any).addTopBar?.({
+            icon: TERMINAL_ICON_ID,
+            title: this.i18n?.terminal_dock_title || "命令行终端",
+            position: "right",
+            callback: () => this.toggleTerminal(),
         });
         this.registerVersionControlEvents();
 
@@ -328,6 +351,7 @@ export default class SiyuanMCP extends Plugin {
     async onunload() {
         this.unregisterVersionControlEvents();
         this.unmountVersionControlDock();
+        this.unmountTerminalDock();
         this.unmountPuppy();
         if (this.httpLauncher) {
             try {
@@ -547,6 +571,53 @@ export default class SiyuanMCP extends Plugin {
         if (this.versionControlContainer) {
             this.versionControlContainer.innerHTML = "";
             this.versionControlContainer = null;
+        }
+    }
+
+    private registerTerminalDock() {
+        this.addDock({
+            config: {
+                position: TERMINAL_DOCK_POSITION,
+                size: { width: 500, height: 0 },
+                icon: TERMINAL_ICON_ID,
+                title: this.i18n?.terminal_dock_title || "命令行终端",
+                show: false,
+            },
+            data: {},
+            type: TERMINAL_DOCK_TYPE,
+            init: (dock: any) => {
+                const element = dock?.element as HTMLElement | undefined;
+                if (!element) return;
+                element.innerHTML = `<div id="${TERMINAL_DOCK_ROOT_ID}" style="height: 100%;"></div>`;
+                this.terminalContainer = element.querySelector(`#${TERMINAL_DOCK_ROOT_ID}`);
+                if (!this.terminalContainer) return;
+                this.terminalPanel = new TerminalPanel({
+                    target: this.terminalContainer,
+                    props: {
+                        onClose: () => this.toggleTerminal(),
+                    },
+                });
+            },
+            destroy: () => this.unmountTerminalDock(),
+        });
+    }
+
+    private toggleTerminal() {
+        const layout = (window as any)?.siyuan?.layout;
+        const targetDock = getDockByPosition(layout, TERMINAL_DOCK_POSITION);
+        if (typeof targetDock?.toggleModel === "function") {
+            targetDock.toggleModel(TERMINAL_DOCK_TYPE, true, false, false, true);
+            return;
+        }
+        targetDock?.showDock?.();
+    }
+
+    private unmountTerminalDock() {
+        this.terminalPanel?.$destroy();
+        this.terminalPanel = null;
+        if (this.terminalContainer) {
+            this.terminalContainer.innerHTML = "";
+            this.terminalContainer = null;
         }
     }
 

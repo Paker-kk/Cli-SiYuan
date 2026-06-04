@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { AV_ACTIONS, BLOCK_ACTIONS, DOCUMENT_ACTIONS, FEEDBACK_ACTIONS, FILE_ACTIONS, FLASHCARD_ACTIONS, FS_ACTIONS, MASCOT_ACTIONS, NOTEBOOK_ACTIONS, SEARCH_ACTIONS, SYSTEM_ACTIONS, TAG_ACTIONS } from "./config";
+import { AV_ACTIONS, BLOCK_ACTIONS, DOCUMENT_ACTIONS, FEEDBACK_ACTIONS, FETCH_ACTIONS, FILE_ACTIONS, FLASHCARD_ACTIONS, FS_ACTIONS, MASCOT_ACTIONS, NOTEBOOK_ACTIONS, SEARCH_ACTIONS, SYSTEM_ACTIONS, TAG_ACTIONS } from "./config";
 import type { NotebookConf } from "../types/shared";
 
 const NotebookConfSchema: z.ZodType<Partial<NotebookConf>> = z.object({
@@ -80,6 +80,7 @@ export const FileActionSchema = z.enum(FILE_ACTIONS);
 export const FlashcardActionSchema = z.enum(FLASHCARD_ACTIONS);
 export const MascotActionSchema = z.enum(MASCOT_ACTIONS);
 export const FeedbackActionSchema = z.enum(FEEDBACK_ACTIONS);
+export const FetchActionSchema = z.enum(FETCH_ACTIONS);
 
 export const FsLsSchema = z.object({
     action: z.literal("ls"),
@@ -385,6 +386,14 @@ export const FeedbackSubmitSchema = z.object({
     suggestion: z.string().trim().max(1000).optional().describe("Optional direct improvement suggestion; keep it focused and avoid repeating the full description."),
     agent: z.string().trim().max(200).optional().describe("Optional Agent product and model name, such as Claude Desktop / Claude Sonnet 4.5. Defaults to 无."),
     source: z.string().trim().max(100).optional().describe("Internal source label. Defaults to the current runtime transport."),
+});
+
+export const FetchSchema = z.object({
+    action: z.literal("fetch"),
+    url: z.string().describe("URL to fetch content from."),
+    maxLength: z.number().int().min(1).optional().describe("Limit response length in characters (default 5000)."),
+    startIndex: z.number().int().min(0).optional().describe("Paginate: start reading from this character index."),
+    raw: z.boolean().optional().describe("Return raw HTML content instead of converting to Markdown."),
 });
 
 const FlashcardScopeSchema = z.enum(["all", "deck", "notebook", "tree"]);

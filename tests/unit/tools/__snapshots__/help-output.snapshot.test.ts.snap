@@ -1941,6 +1941,70 @@ feedback submits plain-text product feedback to the developer through the config
       "tool": "feedback",
     },
   },
+  "fetch": {
+    "actions": {
+      "fetch": {
+        "action": "fetch",
+        "example": {
+          "action": "fetch",
+          "url": "<url>",
+        },
+        "fullDocResource": "siyuan://help/action/fetch/fetch",
+        "guidance": [
+          "Fetches any web page and returns content as Markdown (default) or raw HTML.",
+          "HTML pages are automatically converted to plain-text Markdown for readability.",
+          "Use maxLength and startIndex for paginated retrieval of very large pages.",
+          "Set raw=true to get the original HTML content without conversion.",
+        ],
+        "hint": "Provide a URL to fetch. Returns content in Markdown by default; set raw=true for raw HTML. Use maxLength and startIndex for pagination on large pages.",
+        "requiredFields": [
+          "url",
+        ],
+        "requiresConfirmation": false,
+        "shapes": [
+          "url",
+        ],
+        "tool": "fetch",
+      },
+    },
+    "description": "🌐 Fetch a web page and return its content as clean Markdown (default) or raw HTML. Use to read web content context for AI operations. Use the "action" field to select the operation.
+
+Common actions: fetch. Required fields: fetch: url.
+
+Parameter contract per action (fields outside the action's optional list should not be sent):
+fetch.fetch: required [url] | optional [maxLength, startIndex, raw]
+
+Fetches any web page and returns content as Markdown (default) or raw HTML. HTML pages are automatically converted to plain-text Markdown for readability.",
+    "overview": {
+      "actionSummaries": {
+        "fetch": "Provide a URL to fetch. Returns content in Markdown by default; set raw=true for raw HTML. Use maxLength and startIndex for pagination on large pages.",
+      },
+      "actions": {
+        "fetch": {
+          "hint": "Provide a URL to fetch. Returns content in Markdown by default; set raw=true for raw HTML. Use maxLength and startIndex for pagination on large pages.",
+          "requiresConfirmation": false,
+        },
+      },
+      "advancedActions": [],
+      "commonActions": [
+        "fetch",
+      ],
+      "detailsHint": "Call fetch(action="help", topic="<actionName>") for required fields, shapes, and a minimal example.",
+      "guidance": [
+        "Fetches any web page and returns content as Markdown (default) or raw HTML.",
+        "HTML pages are automatically converted to plain-text Markdown for readability.",
+        "Use maxLength and startIndex for paginated retrieval of very large pages.",
+        "Set raw=true to get the original HTML content without conversion.",
+      ],
+      "helpResources": [
+        "siyuan://help/action/fetch/{action}",
+        "siyuan://help/tool-overview",
+        "siyuan://help/examples",
+        "siyuan://help/ai-layout-guide",
+      ],
+      "tool": "fetch",
+    },
+  },
   "file": {
     "actions": {
       "delete_asset": {
