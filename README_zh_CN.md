@@ -21,7 +21,7 @@
   <a href="https://yangtaihong59.github.io/siyuan-plugins-mcp-sisyphus/">Documentation</a>
 </p>
 
-> **最新版本：**`v0.4.9` — 为不会注入 MCP `server.instructions` 的客户端提供兜底提示词，让 `/AGENTS.md` 记忆与用户规则入口更容易被发现。
+> **最新版本：**`v0.4.9` — 新增 `fetch` 工具：可抓取任意网页并以干净 Markdown（HTML→MD 转换）或原始 HTML 返回内容。同时新增内置终端模拟器，可在思源内部直接运行命令行。
 
 <p align="center">
   <img src="docs/archive/timeline.png" alt="文档时间线" width="720">
@@ -45,7 +45,7 @@ SiYuan Sisyphus 让 AI Agent 安全地阅读、搜索、编辑和整理你的思
 - **AI 友好的笔记访问方式**：`fs` 工具支持 `/笔记本/项目/文档` 这类人类可读路径，让 AI 不必理解块 ID 和文档树细节。
 - **MCP 与 CLI 双入口**：提供 MCP 和 CLI 两种连接方式，共享一套权限管理。
 - **笔记本级安全边界**：每个笔记本可独立设置 `none`、`r`、`rw`、`rwd` 权限。
-- **低上下文工具设计**：把 100+ 个思源能力收敛为 12 个按 action 路由的聚合工具，详细说明按需查看。
+- **低上下文工具设计**：把 100+ 个思源能力收敛为 13 个按 action 路由的聚合工具，详细说明按需查看。
 - **实用连接配置**：插件设置页提供常见 AI 客户端和部署方式的可复制连接配置。
 
 ## 类 Git 文档时间线

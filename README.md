@@ -21,7 +21,7 @@
   <a href="https://yangtaihong59.github.io/siyuan-plugins-mcp-sisyphus/">Documentation</a>
 </p>
 
-> **Latest:** `v0.4.9` — Fallback agent instructions for clients that do not inject MCP `server.instructions`, keeping `/AGENTS.md` memory and user-rule guidance discoverable.
+> **Latest:** `v0.4.9` — New `fetch` tool: fetch any web page and return content as clean Markdown (HTML→MD converted) or raw HTML. Also added an integrated terminal emulator dock for running commands directly inside SiYuan.
 
 <p align="center">
   <img src="docs/archive/timeline.png" alt="Document Timeline" width="720">
@@ -45,7 +45,7 @@ Both entry points use the same permission model and the same underlying SiYuan o
 - **AI-friendly note access**: the `fs` tool lets agents work with human-readable paths such as `/Notebook/Project/Note`, hiding block IDs and document-tree details when they are not needed.
 - **MCP and CLI together**: use MCP for multi-step agent workflows, or CLI for lightweight terminal and script automation.
 - **Notebook-level safety**: give each notebook its own access level: `none`, `r`, `rw`, or `rwd`.
-- **Low-context tool design**: 100+ SiYuan capabilities are grouped into 12 action-routed tools, with detailed help available only when the agent asks for it.
+- **Low-context tool design**: 100+ SiYuan capabilities are grouped into 13 action-routed tools, with detailed help available only when the agent asks for it.
 - **Practical connection setup**: the plugin settings page provides copy-ready connection snippets for common AI clients and deployment styles.
 
 ## Git-Like Document Timeline
